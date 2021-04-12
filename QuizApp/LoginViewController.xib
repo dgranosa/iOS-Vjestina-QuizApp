@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="QuizApp" customModuleProvider="target">
+            <connections>
+                <outlet property="_login_button" destination="vsr-gg-zq6" id="hSr-aM-YoW"/>
+                <outlet property="_password" destination="3hV-Hj-XtY" id="6CN-mp-khA"/>
+                <outlet property="_status" destination="FMP-JA-oaI" id="NuO-Xq-fNv"/>
+                <outlet property="_username" destination="E6B-ZV-bwy" id="nbf-GR-h43"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QuizApp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEt-kV-yvd">
+                    <rect key="frame" x="0.0" y="64" width="414" height="41"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Rh3-aT-XHl">
+                    <rect key="frame" x="30" y="352.5" width="354" height="191"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E6B-ZV-bwy">
+                            <rect key="frame" x="0.0" y="0.0" width="354" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="78c-lo-ssz"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" textContentType="email"/>
+                            <connections>
+                                <action selector="HideStatus:" destination="-1" eventType="editingChanged" id="IIH-Ou-HGF"/>
+                            </connections>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3hV-Hj-XtY">
+                            <rect key="frame" x="0.0" y="65" width="354" height="61.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                            <connections>
+                                <action selector="HideStatus:" destination="-1" eventType="editingChanged" id="aJV-H0-QKy"/>
+                            </connections>
+                        </textField>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FMP-JA-oaI">
+                            <rect key="frame" x="0.0" y="65" width="354" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsr-gg-zq6">
+                            <rect key="frame" x="0.0" y="131.5" width="354" height="59.5"/>
+                            <state key="normal" title="Login"/>
+                            <connections>
+                                <action selector="LoginButton:" destination="-1" eventType="touchUpInside" id="jAa-fm-fiX"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="3hV-Hj-XtY" firstAttribute="height" secondItem="E6B-ZV-bwy" secondAttribute="height" multiplier="1.01852" id="Ziw-qI-NF3"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Rh3-aT-XHl" secondAttribute="trailing" constant="30" id="FLt-uk-3o3"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XEt-kV-yvd" secondAttribute="trailing" id="JNH-wa-NS1"/>
+                <constraint firstItem="Rh3-aT-XHl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="Sdo-Bv-xMI"/>
+                <constraint firstItem="XEt-kV-yvd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Zd4-CT-DXZ"/>
+                <constraint firstItem="Rh3-aT-XHl" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="hXc-xW-FZg"/>
+                <constraint firstItem="XEt-kV-yvd" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="sUt-Zk-sFW"/>
+            </constraints>
+            <point key="canvasLocation" x="688" y="195"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
