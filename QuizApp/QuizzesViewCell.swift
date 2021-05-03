@@ -91,6 +91,9 @@ class QuizzesViewCell: UITableViewCell {
         lTitle.text = quiz.title
         lDescr.text = quiz.description
         
+        let data = NSData(contentsOf: URL.init(string: quiz.imageUrl)!)
+        iImage.image = UIImage(data: data! as Data)
+        
         iStar1.image = quiz.level >= 1 ? iStarY : iStarG
         iStar2.image = quiz.level >= 2 ? iStarY : iStarG
         iStar3.image = quiz.level >= 3 ? iStarY : iStarG

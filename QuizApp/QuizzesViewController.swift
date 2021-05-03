@@ -85,6 +85,12 @@ class QuizzesViewController: UIViewController {
         stackView.autoPinEdgesToSuperviewSafeArea(with: .init(top: 0, left: 20, bottom: 0, right: 20))
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        layGradiant.frame = view.bounds
+    }
+    
     @objc func getQuizzes(_ sender:UIButton!) {
         let quizzes = dataService.fetchQuizes()
         data = Array(Set(quizzes.map({ $0.category }))).map({ (category) -> [Quiz] in
@@ -131,10 +137,12 @@ extension QuizzesViewController : UITableViewDelegate {
         
         let view = UIView()
         
+        view.backgroundColor = .white
+        
         let label = UILabel()
         label.text = "\(data[section].first!.category)".capitalized
         label.font = UIFont.preferredFont(forTextStyle: .title2)
-        label.textColor = .white
+        label.textColor = .black
         
         view.addSubview(label)
         label.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
