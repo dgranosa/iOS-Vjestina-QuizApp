@@ -15,6 +15,13 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var _status: UILabel!
     
     let dataService = DataService()
+    private var router: AppRouter!
+    
+    convenience init(router: AppRouter) {
+        self.init()
+        
+        self.router = router
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,21 +35,18 @@ class LoginViewController: UIViewController {
         
         switch loginResponse {
         case .success:
-            _status.text = "Success"
-            _status.textColor = .green
-            print("Success")
+            router.showTab()
         case .error(let code, let desc):
             _status.text = "Error \(code): \(desc)"
             _status.textColor = .red
             print("Error \(code): \(desc)")
+            
+            _status.alpha = 0
+            _status.isHidden = false
+            UIView.animate(withDuration: 0.3) {
+                self._status.alpha = 1
+            }
         }
-        
-        _status.alpha = 0
-        _status.isHidden = false
-        UIView.animate(withDuration: 0.3) {
-            self._status.alpha = 1
-        }
-        
     }
     
     @IBAction func HideStatus(_ sender: Any) {
@@ -52,14 +56,4 @@ class LoginViewController: UIViewController {
             self._status.isHidden = true
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
