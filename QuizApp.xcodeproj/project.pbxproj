@@ -85,6 +85,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		5231D4FC264EAA5100B093F6 /* DataService */ = {
+			isa = PBXGroup;
+			children = (
+				5261BDAC2622049400249828 /* DataService.swift */,
+				5261BDB32622049500249828 /* DataServiceProtocol.swift */,
+			);
+			path = DataService;
+			sourceTree = "<group>";
+		};
 		52577D72261E5C7C00A6A29F = {
 			isa = PBXGroup;
 			children = (
@@ -107,8 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				5261BDAD2622049400249828 /* Models */,
-				5261BDAC2622049400249828 /* DataService.swift */,
-				5261BDB32622049500249828 /* DataServiceProtocol.swift */,
+				5231D4FC264EAA5100B093F6 /* DataService */,
 				52577D7E261E5C7D00A6A29F /* AppDelegate.swift */,
 				52577D80261E5C7D00A6A29F /* SceneDelegate.swift */,
 				52063D19264060870020DA7C /* AppRouter.swift */,
