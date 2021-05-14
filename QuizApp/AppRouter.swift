@@ -53,14 +53,26 @@ class AppRouter : AppRouterProtocol {
         navigationController.setViewControllers([tabBarController], animated: animated)
     }
     
-    func showQuiz(quiz: Quiz!, animated: Bool = true) {
+    func showQuiz(quiz: Quiz, animated: Bool = true) {
         let vc = QuizViewController(router: self, quiz: quiz)
         
         navigationController.pushViewController(vc, animated: animated)
     }
     
-    func showQuizResult(result: String!, animated: Bool = true) {
-        let vc = QuizResultViewController(router: self, result: result)
+    func showQuizLeaderboard(quiz: Quiz, animated: Bool = true) {
+        let vc = LeaderboardViewController(router: self, quiz: quiz)
+        
+        navigationController.pushViewController(vc, animated: animated)
+    }
+    
+    func showQuizQuestion(quiz: Quiz, animated: Bool = true) {
+        let vc = QuestionViewController(router: self, quiz: quiz)
+        
+        navigationController.pushViewController(vc, animated: animated)
+    }
+    
+    func showQuizResult(quiz: Quiz, quizResult: QuizResult, animated: Bool = true) {
+        let vc = QuizResultViewController(router: self, quiz: quiz, quizResult: quizResult)
         
         navigationController.pushViewController(vc, animated: animated)
     }

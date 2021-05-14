@@ -10,22 +10,27 @@ import UIKit
 class QuizResultViewController: UIViewController {
 
     private var router: AppRouter!
-    private var result: String!
+    private var quiz: Quiz!
+    private var quizResult: QuizResult!
+    let networkService = NetworkService()
     
     private var layGradiant: CAGradientLayer!
     private var lResult: UILabel!
     private var bFinish: UIButton!
+    private var bLeadeboard: UIButton!
     
-    convenience init(router: AppRouter, result: String) {
+    convenience init(router: AppRouter, quiz: Quiz, quizResult: QuizResult) {
         self.init()
         self.router = router
-        self.result = result
+        self.quiz = quiz
+        self.quizResult = quizResult
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
+        submitResult()
     }
     
     func setupView() {
@@ -51,8 +56,21 @@ class QuizResultViewController: UIViewController {
         bFinish.autoSetDimension(.height, toSize: 50)
         bFinish.autoPinEdgesToSuperviewEdges(with: .init(top: -1, left: 40, bottom: 50, right: 40), excludingEdge: .top)
         
+        bLeadeboard = UIButton()
+        bLeadeboard.setTitle("Show leaderboard", for: .normal)
+        bLeadeboard.setTitleColor(.purple, for: .normal)
+        bLeadeboard.backgroundColor = .white
+        bLeadeboard.layer.cornerRadius = 25
+        bLeadeboard.addTarget(self, action: #selector(self.showLeaderboard), for: .touchUpInside)
+        bLeadeboard.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        view.addSubview(bLeadeboard)
+        bLeadeboard.autoSetDimension(.height, toSize: 50)
+        bLeadeboard.autoPinEdge(toSuperviewEdge: .leading, withInset: 40)
+        bLeadeboard.autoPinEdge(toSuperviewEdge: .trailing, withInset: 40)
+        bLeadeboard.autoPinEdge(.bottom, to: .top, of: bFinish, withOffset: -20)
+        
         lResult = UILabel()
-        lResult.text = result
+        lResult.text = "\(quizResult.noOfCorrect)/\(quiz.questions.count)"
         lResult.font = UIFont.boldSystemFont(ofSize: 88)
         lResult.textColor = .white
         lResult.textAlignment = .center
@@ -66,7 +84,17 @@ class QuizResultViewController: UIViewController {
         layGradiant.frame = view.bounds
     }
     
-    @objc func finishQuiz() {
+    @objc func showLeaderboard(_ sender: UIButton!) {
+        router.showQuizLeaderboard(quiz: quiz)
+    }
+    
+    @objc func finishQuiz(_ sender: UIButton!) {
         router.goBackToQuizzes()
+    }
+    
+    func submitResult() {
+        networkService.submitResult(quizResult: quizResult, completionHandler: { (result: Result<String, RequestError>) in
+            return
+        })
     }
 }

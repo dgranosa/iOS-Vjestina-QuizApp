@@ -2,7 +2,7 @@
 //  QuizViewController.swift
 //  QuizApp
 //
-//  Created by five on 04.05.2021..
+//  Created by five on 14.05.2021..
 //
 
 import UIKit
@@ -11,7 +11,6 @@ class QuizViewController: UIViewController {
     
     private var router: AppRouter!
     private var quiz: Quiz!
-    private var currentQuestionIndex: Int = 0
     
     convenience init(router: AppRouter, quiz: Quiz) {
         self.init()
@@ -21,22 +20,19 @@ class QuizViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
-        showNextQuestion()
     }
     
     private var layGradiant: CAGradientLayer!
     private var bBack: UIButton!
     private var lTitle: UILabel!
-    private var lCurrQuestion: UILabel!
-    private var questionTracker: QuestionTrackerView!
-    private var lQuestion: UILabel!
-    private var bAnswer1: UIButton!
-    private var bAnswer2: UIButton!
-    private var bAnswer3: UIButton!
-    private var bAnswer4: UIButton!
-    private var bsAnswer: [UIButton]!
+    private var bLeaderboard: UIButton!
+    private var vQuiz: UIView!
+    private var lQTitle: UILabel!
+    private var lQDesc: UILabel!
+    private var iQImage: UIImageView!
+    private var bQStart: UIButton!
     
     func setupView() {
         layGradiant = CAGradientLayer()
@@ -62,133 +58,85 @@ class QuizViewController: UIViewController {
         view.addSubview(lTitle)
         lTitle.autoPinEdgesToSuperviewEdges(with: .init(top: 45, left: 0, bottom: -1, right: 0), excludingEdge: .bottom)
         
-        lCurrQuestion = UILabel()
-        lCurrQuestion.text = "?/?"
-        lCurrQuestion.font = UIFont.preferredFont(forTextStyle: .title2)
-        lCurrQuestion.textColor = .white
-        view.addSubview(lCurrQuestion)
-        lCurrQuestion.autoSetDimension(.height, toSize: 25)
-        lCurrQuestion.autoPinEdge(toSuperviewEdge: .top, withInset: 100)
-        lCurrQuestion.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+        vQuiz = UIView()
+        vQuiz.backgroundColor = .init(white: 1, alpha: 0.3)
+        vQuiz.layer.cornerRadius = 10
         
-        questionTracker = QuestionTrackerView(number: quiz.questions.count)
-        view.addSubview(questionTracker)
-        questionTracker.autoSetDimension(.height, toSize: 5)
-        questionTracker.autoPinEdge(.top, to: .bottom, of: lCurrQuestion, withOffset: 10)
-        questionTracker.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
-        questionTracker.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        lQTitle = UILabel()
+        lQTitle.text = quiz.title
+        lQTitle.textColor = .white
+        lQTitle.textAlignment = .center
+        lQTitle.font = UIFont.boldSystemFont(ofSize: 32)
+        vQuiz.addSubview(lQTitle)
         
-        lQuestion = UILabel()
-        lQuestion.text = "Who was the most famous Croatian basketball player in the NBA?"
-        lQuestion.font = UIFont.preferredFont(forTextStyle: .title1)
-        lQuestion.textColor = .white
-        lQuestion.numberOfLines = 0
-        view.addSubview(lQuestion)
-        lQuestion.autoSetDimension(.height, toSize: 110)
-        lQuestion.autoPinEdgesToSuperviewEdges(with: .init(top: 180, left: 20, bottom: -1, right: 20), excludingEdge: .bottom)
+        lQDesc = UILabel()
+        lQDesc.text = quiz.description
+        lQDesc.textColor = .white
+        lQDesc.textAlignment = .center
+        lQDesc.numberOfLines = 2
+        lQDesc.font = UIFont.boldSystemFont(ofSize: 18)
+        vQuiz.addSubview(lQDesc)
         
-        bAnswer1 = UIButton()
-        bAnswer1.setTitle("Answer #1", for: .normal)
-        bAnswer1.backgroundColor = .init(white: 1, alpha: 0.3)
-        bAnswer1.layer.cornerRadius = 27
-        bAnswer1.contentHorizontalAlignment = .left
-        bAnswer1.titleEdgeInsets = .init(top: 0, left: 27, bottom: 0, right: 0)
-        bAnswer1.addTarget(self, action: #selector(self.answer), for: .touchUpInside)
-        view.addSubview(bAnswer1)
-        bAnswer1.autoSetDimension(.height, toSize: 55)
-        bAnswer1.autoPinEdge(.top, to: .bottom, of: lQuestion, withOffset: 40)
-        bAnswer1.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
-        bAnswer1.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        iQImage = UIImageView(image: UIImage(systemName: "questionmark"))
+        iQImage.contentMode = .scaleAspectFill
+        iQImage.clipsToBounds = true
+        iQImage.layer.cornerRadius = 10
+        vQuiz.addSubview(iQImage)
         
-        bAnswer2 = UIButton()
-        bAnswer2.setTitle("Answer #2", for: .normal)
-        bAnswer2.backgroundColor = .init(white: 1, alpha: 0.3)
-        bAnswer2.layer.cornerRadius = 27
-        bAnswer2.contentHorizontalAlignment = .left
-        bAnswer2.titleEdgeInsets = .init(top: 0, left: 27, bottom: 0, right: 0)
-        bAnswer2.addTarget(self, action: #selector(self.answer), for: .touchUpInside)
-        view.addSubview(bAnswer2)
-        bAnswer2.autoSetDimension(.height, toSize: 55)
-        bAnswer2.autoPinEdge(.top, to: .bottom, of: bAnswer1, withOffset: 15)
-        bAnswer2.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
-        bAnswer2.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        bQStart = UIButton()
+        bQStart.setTitle("Start Quiz", for: .normal)
+        bQStart.setTitleColor(.purple, for: .normal)
+        bQStart.backgroundColor = .white
+        bQStart.layer.cornerRadius = 25
+        bQStart.addTarget(self, action: #selector(self.startQuiz), for: .touchUpInside)
+        bQStart.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        vQuiz.addSubview(bQStart)
         
-        bAnswer3 = UIButton()
-        bAnswer3.setTitle("Answer #3", for: .normal)
-        bAnswer3.backgroundColor = .init(white: 1, alpha: 0.3)
-        bAnswer3.layer.cornerRadius = 27
-        bAnswer3.contentHorizontalAlignment = .left
-        bAnswer3.titleEdgeInsets = .init(top: 0, left: 27, bottom: 0, right: 0)
-        bAnswer3.addTarget(self, action: #selector(self.answer), for: .touchUpInside)
-        view.addSubview(bAnswer3)
-        bAnswer3.autoSetDimension(.height, toSize: 55)
-        bAnswer3.autoPinEdge(.top, to: .bottom, of: bAnswer2, withOffset: 15)
-        bAnswer3.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
-        bAnswer3.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        lQTitle.autoPinEdgesToSuperviewEdges(with: .init(top: 20, left: 20, bottom: -1, right: 20), excludingEdge: .bottom)
+        lQDesc.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+        lQDesc.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        lQDesc.autoPinEdge(.top, to: .bottom, of: lQTitle, withOffset: 20)
+        iQImage.autoSetDimension(.height, toSize: 200)
+        iQImage.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+        iQImage.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        iQImage.autoPinEdge(.top, to: .bottom, of: lQDesc, withOffset: 20)
+        bQStart.autoSetDimension(.height, toSize: 50)
+        bQStart.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+        bQStart.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        bQStart.autoPinEdge(.top, to: .bottom, of: iQImage, withOffset: 25)
         
-        bAnswer4 = UIButton()
-        bAnswer4.setTitle("Answer #4", for: .normal)
-        bAnswer4.backgroundColor = .init(white: 1, alpha: 0.3)
-        bAnswer4.layer.cornerRadius = 27
-        bAnswer4.contentHorizontalAlignment = .left
-        bAnswer4.titleEdgeInsets = .init(top: 0, left: 27, bottom: 0, right: 0)
-        bAnswer4.addTarget(self, action: #selector(self.answer), for: .touchUpInside)
-        view.addSubview(bAnswer4)
-        bAnswer4.autoSetDimension(.height, toSize: 55)
-        bAnswer4.autoPinEdge(.top, to: .bottom, of: bAnswer3, withOffset: 15)
-        bAnswer4.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
-        bAnswer4.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        view.addSubview(vQuiz)
+        vQuiz.autoSetDimension(.height, toSize: 420)
+        vQuiz.autoPinEdgesToSuperviewEdges(with: .init(top: 200, left: 20, bottom: -1, right: 20), excludingEdge: .bottom)
         
-        bsAnswer = [bAnswer1, bAnswer2, bAnswer3, bAnswer4]
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        layGradiant.frame = view.bounds
-    }
-    
-    @objc func showNextQuestion() {
-        currentQuestionIndex += 1
-        
-        if currentQuestionIndex > quiz.questions.count {
-            router.showQuizResult(result: "\(questionTracker.getCorrectAnswers())/\(quiz.questions.count)")
-            return
+        DispatchQueue.global().async { [self] in // TODO: store image data
+            let data = NSData(contentsOf: URL(string: quiz.imageUrl)!)
+            DispatchQueue.main.async {
+                self.iQImage.image = UIImage(data: data! as Data)
+            }
         }
         
-        questionTracker.setCurrentQuestion(questionIndex: currentQuestionIndex)
-        lCurrQuestion.text = "\(currentQuestionIndex)/\(quiz.questions.count)"
+        bLeaderboard = UIButton()
+        bLeaderboard.setTitle("Leaderboard", for: .normal)
+        bLeaderboard.setTitleColor(.white, for: .normal)
+        bLeaderboard.addTarget(self, action: #selector(self.showLeaderboard), for: .touchUpInside)
+        bLeaderboard.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         
-        let question = quiz.questions[currentQuestionIndex-1]
-        lQuestion.text = question.question
-        
-        for (index, bAnswer) in bsAnswer.enumerated() {
-            bAnswer.setTitle(question.answers[index], for: .normal)
-            bAnswer.backgroundColor = .init(white: 1, alpha: 0.3)
-            bAnswer.isEnabled = true
-        }
+        view.addSubview(bLeaderboard)
+        bLeaderboard.autoPinEdge(.bottom, to: .top, of: vQuiz, withOffset: -20)
+        bLeaderboard.autoPinEdge(.trailing, to: .trailing, of: vQuiz)
+    }
+    
+    @objc func showLeaderboard(_ sender: UIButton!) {
+        router.showQuizLeaderboard(quiz: quiz)
+    }
+    
+    @objc func startQuiz(_ sender: UIButton!) {
+        router.showQuizQuestion(quiz: quiz)
     }
     
     @objc func goBack(_ sender: UIButton!) {
         router.goBack()
-    }
-    
-    @objc func answer(_ sender: UIButton!) {
-        let answeredIndex = bsAnswer.firstIndex(of: sender)
-        let correctAnswerIndex = quiz.questions[currentQuestionIndex-1].correctAnswer
-        
-        if answeredIndex == correctAnswerIndex {
-            questionTracker.setCorrectQuestion(questionIndex: currentQuestionIndex)
-            sender.backgroundColor = .green
-        } else {
-            questionTracker.setWrongQuestion(questionIndex: currentQuestionIndex)
-            sender.backgroundColor = .red
-            bsAnswer[correctAnswerIndex].backgroundColor = .green
-        }
-        
-        bsAnswer.forEach({ $0.isEnabled = false })
-        
-        questionTracker.animateQuestion(questionIndex: currentQuestionIndex, duration: 0.5)
-        perform(#selector(self.showNextQuestion), with: nil, afterDelay: 0.5)
     }
 
 }

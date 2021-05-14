@@ -11,7 +11,7 @@ import PureLayout
 class QuizzesViewController: UIViewController {
     
     let cellId = "cellId"
-    let dataService = DataService()
+    let networkService = NetworkService()
     private var router: AppRouter!
     private var data: [[Quiz]]!
     
@@ -31,6 +31,7 @@ class QuizzesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        getQuizzes(bGetQuizzes) // asdafohasiufhajsfihasfhaishfihas
     }
     
     func setupView() {
@@ -97,13 +98,36 @@ class QuizzesViewController: UIViewController {
     }
     
     @objc func getQuizzes(_ sender: UIButton!) {
-        let quizzes = dataService.fetchQuizes()
+        networkService.fetchQuizes(completionHandler: { (result: Result<Quizzes, RequestError>) in
+            switch result {
+            case .failure(let error):
+                switch error {
+                case .clientError: break
+                case .serverError: break
+                case .noDataError: break
+                case .decodingError: break
+                case .noConnectionError: break
+                }
+            case .success(let q):
+                let quizzes = q.quizzes
+                self.data = Array(Set(quizzes.map({ $0.category }))).map({ (category) -> [Quiz] in
+                    return quizzes.filter({ $0.category == category })
+                })
+                
+                DispatchQueue.main.async { [self] in
+                    tableView.reloadData()
+                    
+                    lFunFact.text = "There are \(quizzes.flatMap({ $0.questions }).map({ $0.question }).filter({ $0.contains("NBA") }).count) questions that contain the word \"NBA\""
+                }
+            }
+        })
+        /*let quizzes = dataService.fetchQuizes()
         data = Array(Set(quizzes.map({ $0.category }))).map({ (category) -> [Quiz] in
             return quizzes.filter({ $0.category == category })
         })
         tableView.reloadData()
         
-        lFunFact.text = "There are \(quizzes.flatMap({ $0.questions }).map({ $0.question }).filter({ $0.contains("NBA") }).count) questions that contain the word \"NBA\""
+        lFunFact.text = "There are \(quizzes.flatMap({ $0.questions }).map({ $0.question }).filter({ $0.contains("NBA") }).count) questions that contain the word \"NBA\""*/
     }
 }
 

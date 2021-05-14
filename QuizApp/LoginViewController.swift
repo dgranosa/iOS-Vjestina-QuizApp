@@ -14,7 +14,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var _login_button: UIButton!
     @IBOutlet weak var _status: UILabel!
     
-    let dataService = DataService()
+    let networkService = NetworkService()
     private var router: AppRouter!
     
     convenience init(router: AppRouter) {
@@ -25,15 +25,40 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.router.showTab() // asdasdasdasdajsfhiuashiugascuhaoschai
     }
 
     @IBAction func LoginButton(_ sender: Any) {
         let username = _username.text!
         let password = _password.text!
         
-        let loginResponse = dataService.login(email: username, password: password)
+        networkService.login(email: username, password: password, completionHandler: { (result: Result<LoginStatus, RequestError>) in
+            switch result {
+            case .failure(let error):
+                switch error {
+                case .clientError:
+                    break
+                case .decodingError:
+                    break
+                case .noDataError:
+                    break
+                case .serverError:
+                    break
+                case .noConnectionError:
+                    break
+                }
+            case .success(let loginStatus):
+                let userDefaults = UserDefaults.init()
+                userDefaults.set(loginStatus.token, forKey: "token")
+                userDefaults.set(loginStatus.userId, forKey: "userId")
+                
+                DispatchQueue.main.async {
+                    self.router.showTab()
+                }
+            }
+        })
         
-        switch loginResponse {
+        /*switch loginResponse {
         case .success:
             router.showTab()
         case .error(let code, let desc):
@@ -46,7 +71,7 @@ class LoginViewController: UIViewController {
             UIView.animate(withDuration: 0.3) {
                 self._status.alpha = 1
             }
-        }
+        }*/
     }
     
     @IBAction func HideStatus(_ sender: Any) {
