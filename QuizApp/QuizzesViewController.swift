@@ -12,6 +12,7 @@ class QuizzesViewController: UIViewController {
     
     let cellId = "cellId"
     let dataService = DataService()
+    private var router: AppRouter!
     private var data: [[Quiz]]!
     
     private var layGradiant: CAGradientLayer!
@@ -21,10 +22,14 @@ class QuizzesViewController: UIViewController {
     private var bGetQuizzes: UIButton!
     private var lFunFactTitle: UILabel!
     private var lFunFact: UILabel!
+    
+    convenience init(router: AppRouter) {
+        self.init()
+        self.router = router
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupView()
     }
     
@@ -65,7 +70,7 @@ class QuizzesViewController: UIViewController {
         vFunFact.addArrangedSubview(lFunFactTitle)
         vFunFact.addArrangedSubview(lFunFact)
         
-        tableView = UITableView()
+        tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .none
         tableView.register(QuizzesViewCell.self, forCellReuseIdentifier: cellId)
         tableView.rowHeight = UITableView.automaticDimension
@@ -85,7 +90,13 @@ class QuizzesViewController: UIViewController {
         stackView.autoPinEdgesToSuperviewSafeArea(with: .init(top: 0, left: 20, bottom: 0, right: 20))
     }
     
-    @objc func getQuizzes(_ sender:UIButton!) {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        layGradiant.frame = view.bounds
+    }
+    
+    @objc func getQuizzes(_ sender: UIButton!) {
         let quizzes = dataService.fetchQuizes()
         data = Array(Set(quizzes.map({ $0.category }))).map({ (category) -> [Quiz] in
             return quizzes.filter({ $0.category == category })
@@ -111,6 +122,11 @@ extension QuizzesViewController : UITableViewDataSource {
         }
         
         return data[section].count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        router.showQuiz(quiz: data[indexPath.section][indexPath.row])
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
