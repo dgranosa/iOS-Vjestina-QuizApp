@@ -28,7 +28,7 @@ class NetworkService: NetworkServiceProtocol {
         executeUrlRequest(request, completionHandler: completionHandler)
     }
     
-    func submitResult(quizResult: QuizResult, completionHandler: @escaping (Result<String, RequestError>) -> Void) {
+    func submitResult(quizResult: QuizResult, completionHandler: @escaping (Result<EmtpyResponse, RequestError>) -> Void) {
         guard let url = URL(string: baseUrl + "/result") else { return }
         
         var request = URLRequest(url: url)

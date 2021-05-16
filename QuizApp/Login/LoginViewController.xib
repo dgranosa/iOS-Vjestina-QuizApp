@@ -10,10 +10,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="QuizApp" customModuleProvider="target">
             <connections>
-                <outlet property="_login_button" destination="vsr-gg-zq6" id="hSr-aM-YoW"/>
-                <outlet property="_password" destination="3hV-Hj-XtY" id="6CN-mp-khA"/>
-                <outlet property="_status" destination="FMP-JA-oaI" id="NuO-Xq-fNv"/>
-                <outlet property="_username" destination="E6B-ZV-bwy" id="nbf-GR-h43"/>
+                <outlet property="loginButton" destination="vsr-gg-zq6" id="hSr-aM-YoW"/>
+                <outlet property="passwordTextField" destination="3hV-Hj-XtY" id="6CN-mp-khA"/>
+                <outlet property="statusLabel" destination="FMP-JA-oaI" id="NuO-Xq-fNv"/>
+                <outlet property="usernameTextField" destination="E6B-ZV-bwy" id="nbf-GR-h43"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -51,10 +51,10 @@
                             </connections>
                         </textField>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FMP-JA-oaI">
-                            <rect key="frame" x="0.0" y="65" width="354" height="0.0"/>
+                            <rect key="frame" x="0.0" y="128" width="354" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" systemColor="systemRedColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsr-gg-zq6">
@@ -86,6 +86,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -10,18 +10,18 @@ import PureLayout
 
 class QuizzesViewController: UIViewController {
     
-    let cellId = "cellId"
+    let cellId = "quizzesCellId"
     let networkService = NetworkService()
     private var router: AppRouter!
     private var data: [[Quiz]]!
     
-    private var layGradiant: CAGradientLayer!
+    private var gradiantLayer: CAGradientLayer!
     private var stackView: UIStackView!
     private var tableView: UITableView!
-    private var vFunFact: UIStackView!
-    private var bGetQuizzes: UIButton!
-    private var lFunFactTitle: UILabel!
-    private var lFunFact: UILabel!
+    private var funFactStackView: UIStackView!
+    private var getQuizzesButton: UIButton!
+    private var funFactTitleLabel: UILabel!
+    private var funFactLabel: UILabel!
     
     convenience init(router: AppRouter) {
         self.init()
@@ -31,45 +31,44 @@ class QuizzesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        getQuizzes(bGetQuizzes) // asdafohasiufhajsfihasfhaishfihas
     }
     
     func setupView() {
-        layGradiant = CAGradientLayer()
-        layGradiant.frame = view.bounds
-        layGradiant.colors = [CGColor(red: 0.21, green: 0.21, blue: 0.49, alpha: 1),
+        gradiantLayer = CAGradientLayer()
+        gradiantLayer.frame = view.bounds
+        gradiantLayer.colors = [CGColor(red: 0.21, green: 0.21, blue: 0.49, alpha: 1),
                                 CGColor(red: 0.4, green: 0.29, blue: 0.61, alpha: 1)]
-        layGradiant.startPoint = CGPoint(x: 0, y: 1)
-        layGradiant.endPoint = CGPoint(x: 1, y: 0)
+        gradiantLayer.startPoint = CGPoint(x: 0, y: 1)
+        gradiantLayer.endPoint = CGPoint(x: 1, y: 0)
         
-        view.layer.addSublayer(layGradiant)
+        view.layer.addSublayer(gradiantLayer)
         
         stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.spacing = 10
         
-        bGetQuizzes = UIButton()
-        bGetQuizzes.setTitle("Get Quizzes", for: .normal)
-        bGetQuizzes.addTarget(self, action: #selector(self.getQuizzes), for: .touchUpInside)
+        getQuizzesButton = UIButton()
+        getQuizzesButton.setTitle("Get Quizzes", for: .normal)
+        getQuizzesButton.addTarget(self, action: #selector(self.getQuizzes), for: .touchUpInside)
         
-        vFunFact = UIStackView()
-        vFunFact.axis = .vertical
+        funFactStackView = UIStackView()
+        funFactStackView.axis = .vertical
         
-        lFunFactTitle = UILabel()
-        lFunFactTitle.text = "Fun fact"
-        lFunFactTitle.textAlignment = .left
-        lFunFactTitle.font = UIFont.preferredFont(forTextStyle: .title2)
-        lFunFactTitle.textColor = .white
+        funFactTitleLabel = UILabel()
+        funFactTitleLabel.text = "Fun fact"
+        funFactTitleLabel.textAlignment = .left
+        funFactTitleLabel.font = UIFont.preferredFont(forTextStyle: .title2)
+        funFactTitleLabel.textColor = .white
         
-        lFunFact = UILabel()
-        lFunFact.text = "None"
-        lFunFact.numberOfLines = 2
-        lFunFact.textAlignment = .left
-        lFunFact.textColor = .white
+        funFactLabel = UILabel()
+        funFactLabel.text = "None"
+        funFactLabel.numberOfLines = 2
+        funFactLabel.textAlignment = .left
+        funFactLabel.textColor = .white
         
-        vFunFact.addArrangedSubview(lFunFactTitle)
-        vFunFact.addArrangedSubview(lFunFact)
+        funFactStackView.addArrangedSubview(funFactTitleLabel)
+        funFactStackView.addArrangedSubview(funFactLabel)
         
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .none
@@ -79,11 +78,11 @@ class QuizzesViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        lFunFactTitle.autoSetDimension(.height, toSize: 40)
-        bGetQuizzes.autoSetDimension(.height, toSize: 50)
+        funFactTitleLabel.autoSetDimension(.height, toSize: 40)
+        getQuizzesButton.autoSetDimension(.height, toSize: 50)
         
-        stackView.addArrangedSubview(bGetQuizzes)
-        stackView.addArrangedSubview(vFunFact)
+        stackView.addArrangedSubview(getQuizzesButton)
+        stackView.addArrangedSubview(funFactStackView)
         stackView.addArrangedSubview(tableView)
         
         view.addSubview(stackView)
@@ -94,40 +93,30 @@ class QuizzesViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        layGradiant.frame = view.bounds
+        gradiantLayer.frame = view.bounds
     }
     
     @objc func getQuizzes(_ sender: UIButton!) {
-        networkService.fetchQuizes(completionHandler: { (result: Result<Quizzes, RequestError>) in
+        getQuizzesButton.isEnabled = false
+        networkService.fetchQuizes(completionHandler: { [self] (result: Result<Quizzes, RequestError>) in
+            DispatchQueue.main.async { self.getQuizzesButton.isEnabled = true }
+            
             switch result {
             case .failure(let error):
-                switch error {
-                case .clientError: break
-                case .serverError: break
-                case .noDataError: break
-                case .decodingError: break
-                case .noConnectionError: break
-                }
+                handleError(error)
             case .success(let q):
                 let quizzes = q.quizzes
-                self.data = Array(Set(quizzes.map({ $0.category }))).map({ (category) -> [Quiz] in
+                data = Array(Set(quizzes.map({ $0.category }))).map({ (category) -> [Quiz] in
                     return quizzes.filter({ $0.category == category })
                 })
                 
                 DispatchQueue.main.async { [self] in
                     tableView.reloadData()
                     
-                    lFunFact.text = "There are \(quizzes.flatMap({ $0.questions }).map({ $0.question }).filter({ $0.contains("NBA") }).count) questions that contain the word \"NBA\""
+                    funFactLabel.text = "There are \(quizzes.flatMap({ $0.questions }).map({ $0.question }).filter({ $0.contains("NBA") }).count) questions that contain the word \"NBA\""
                 }
             }
         })
-        /*let quizzes = dataService.fetchQuizes()
-        data = Array(Set(quizzes.map({ $0.category }))).map({ (category) -> [Quiz] in
-            return quizzes.filter({ $0.category == category })
-        })
-        tableView.reloadData()
-        
-        lFunFact.text = "There are \(quizzes.flatMap({ $0.questions }).map({ $0.question }).filter({ $0.contains("NBA") }).count) questions that contain the word \"NBA\""*/
     }
 }
 

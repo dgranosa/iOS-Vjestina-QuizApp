@@ -98,9 +98,9 @@ class QuizzesViewCell: UITableViewCell {
         
         iImage.image = UIImage(systemName: "questionmark")
         DispatchQueue.global().async { [weak self] in
-            let data = NSData(contentsOf: URL.init(string: quiz.imageUrl)!)
+            guard let data = NSData(contentsOf: URL.init(string: quiz.imageUrl)!) else { return }
             DispatchQueue.main.async {
-                self?.iImage.image = UIImage(data: data! as Data)
+                self?.iImage.image = UIImage(data: data as Data)
             }
         }
         
