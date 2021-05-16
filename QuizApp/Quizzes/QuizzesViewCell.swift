@@ -91,6 +91,10 @@ class QuizzesViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func prepareForReuse() {
+        iImage.image = nil
+    }
 
     public func setQuiz(quiz: Quiz) {
         lTitle.text = quiz.title
