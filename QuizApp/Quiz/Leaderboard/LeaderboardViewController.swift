@@ -25,17 +25,7 @@ class LeaderboardViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        NetworkService().fetchLeaderboard(quiz: quiz, completionHandler: { [self] (result: Result<[LeaderboardResult], RequestError>) -> Void in
-            switch result {
-            case .success(let leaderboardResults):
-                leaderboardData = leaderboardResults
-                DispatchQueue.main.async {
-                    tableView.reloadData()
-                }
-            case .failure(let error):
-                handleError(error)
-            }
-        })
+        fetchLeaderboard()
     }
     
     private var gradiantLayer: CAGradientLayer!
@@ -103,6 +93,19 @@ class LeaderboardViewController: UIViewController {
         router.goBack()
     }
     
+    func fetchLeaderboard() {
+        NetworkService().fetchLeaderboard(quiz: quiz, completionHandler: { [self] (result: Result<[LeaderboardResult], RequestError>) -> Void in
+            switch result {
+            case .success(let leaderboardResults):
+                leaderboardData = leaderboardResults
+                DispatchQueue.main.async {
+                    tableView.reloadData()
+                }
+            case .failure(let error):
+                handleError(error)
+            }
+        })
+    }
 }
 
 

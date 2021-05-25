@@ -52,7 +52,9 @@ class NetworkService: NetworkServiceProtocol {
     }
     
     func executeUrlRequest<T: Decodable>(_ request: URLRequest, completionHandler: @escaping (Result<T, RequestError>) -> Void) {
-        if !reach!.isReachable() {
+        guard let reach = reach else { return }
+        
+        if !reach.isReachable() {
             completionHandler(.failure(.noConnectionError))
             return
         }
