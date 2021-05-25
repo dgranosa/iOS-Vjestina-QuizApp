@@ -1,0 +1,3 @@
+struct EmtpyResponse: Codable {
+    
+}
