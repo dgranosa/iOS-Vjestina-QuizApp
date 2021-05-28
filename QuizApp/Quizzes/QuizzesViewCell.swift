@@ -100,12 +100,10 @@ class QuizzesViewCell: UITableViewCell {
         lTitle.text = quiz.title
         lDescr.text = quiz.description
         
-        iImage.image = UIImage(systemName: "questionmark")
-        DispatchQueue.global().async { [weak self] in
-            guard let data = NSData(contentsOf: URL.init(string: quiz.imageUrl)!) else { return }
-            DispatchQueue.main.async {
-                self?.iImage.image = UIImage(data: data as Data)
-            }
+        if let imageData = quiz.imageData {
+            iImage.image = UIImage(data: imageData)
+        } else {
+            iImage.image = UIImage(systemName: "questionmark")
         }
         
         iStar1.image = quiz.level >= 1 ? iStarY : iStarG

@@ -1,3 +1,5 @@
+import Foundation
+
 struct Quiz: Codable {
 
     let id: Int
@@ -6,6 +8,7 @@ struct Quiz: Codable {
     let category: QuizCategory
     let level: Int
     let imageUrl: String
+    var imageData: Data?
     let questions: [Question]
 
     enum CodingKeys: String, CodingKey {
@@ -16,5 +19,13 @@ struct Quiz: Codable {
         case level
         case imageUrl = "image"
         case questions
+    }
+    
+    mutating func getImage() {
+        guard imageData == nil else { return }
+        
+        if let url = URL.init(string: imageUrl) {
+            imageData = try? Data(contentsOf: url)
+        }
     }
 }

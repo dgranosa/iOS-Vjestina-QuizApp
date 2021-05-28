@@ -109,12 +109,7 @@ class QuizViewController: UIViewController {
         quizView.autoSetDimension(.height, toSize: 420)
         quizView.autoPinEdgesToSuperviewEdges(with: .init(top: 200, left: 20, bottom: -1, right: 20), excludingEdge: .bottom)
         
-        DispatchQueue.global().async { [self] in // TODO: store image data
-            let data = NSData(contentsOf: URL(string: quiz.imageUrl)!)
-            DispatchQueue.main.async {
-                self.quizImageView.image = UIImage(data: data! as Data)
-            }
-        }
+        if let imageData = quiz.imageData { quizImageView.image = UIImage(data: imageData) }
         
         leaderboardButton = UIButton()
         leaderboardButton.setTitle("Leaderboard", for: .normal)

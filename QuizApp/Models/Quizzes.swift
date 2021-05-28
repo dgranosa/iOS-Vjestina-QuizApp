@@ -1,5 +1,5 @@
 struct Quizzes: Codable {
     
-    let quizzes: [Quiz]
+    var quizzes: [Quiz]
     
 }

@@ -16,6 +16,7 @@ class LoginViewController: UIViewController {
     
     let networkService = NetworkService()
     private var router: AppRouter!
+    private var gradiantLayer: CAGradientLayer!
     
     convenience init(router: AppRouter) {
         self.init()
@@ -25,6 +26,20 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        gradiantLayer = CAGradientLayer()
+        gradiantLayer.frame = view.bounds
+        gradiantLayer.colors = [CGColor(red: 0.21, green: 0.21, blue: 0.49, alpha: 1),
+                                CGColor(red: 0.4, green: 0.29, blue: 0.61, alpha: 1)]
+        gradiantLayer.startPoint = CGPoint(x: 0, y: 1)
+        gradiantLayer.endPoint = CGPoint(x: 1, y: 0)
+        view.layer.insertSublayer(gradiantLayer, at: 0)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        gradiantLayer.frame = view.bounds
     }
 
     @IBAction func LoginButton(_ sender: Any) {
@@ -72,5 +87,12 @@ class LoginViewController: UIViewController {
         }) { (finished) in
             self.statusLabel.isHidden = true
         }
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        LoginButton(self)
+        return true
     }
 }

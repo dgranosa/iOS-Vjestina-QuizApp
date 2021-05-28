@@ -11,26 +11,27 @@ import PureLayout
 class QuizzesViewController: UIViewController {
     
     let cellId = "quizzesCellId"
-    let networkService = NetworkService()
     private var router: AppRouter!
+    private var quizRepository: QuizRepository!
     private var data: [[Quiz]]!
     
     private var gradiantLayer: CAGradientLayer!
     private var stackView: UIStackView!
     private var tableView: UITableView!
     private var funFactStackView: UIStackView!
-    private var getQuizzesButton: UIButton!
     private var funFactTitleLabel: UILabel!
     private var funFactLabel: UILabel!
     
-    convenience init(router: AppRouter) {
+    convenience init(router: AppRouter, quizRepository: QuizRepository) {
         self.init()
         self.router = router
+        self.quizRepository = quizRepository
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        getQuizzes()
     }
     
     func setupView() {
@@ -47,10 +48,6 @@ class QuizzesViewController: UIViewController {
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.spacing = 10
-        
-        getQuizzesButton = UIButton()
-        getQuizzesButton.setTitle("Get Quizzes", for: .normal)
-        getQuizzesButton.addTarget(self, action: #selector(self.getQuizzes), for: .touchUpInside)
         
         funFactStackView = UIStackView()
         funFactStackView.axis = .vertical
@@ -79,15 +76,13 @@ class QuizzesViewController: UIViewController {
         tableView.delegate = self
         
         funFactTitleLabel.autoSetDimension(.height, toSize: 40)
-        getQuizzesButton.autoSetDimension(.height, toSize: 50)
         
-        stackView.addArrangedSubview(getQuizzesButton)
         stackView.addArrangedSubview(funFactStackView)
         stackView.addArrangedSubview(tableView)
         
         view.addSubview(stackView)
         
-        stackView.autoPinEdgesToSuperviewSafeArea(with: .init(top: 0, left: 20, bottom: 0, right: 20))
+        stackView.autoPinEdgesToSuperviewSafeArea(with: .init(top: 5, left: 20, bottom: 0, right: 20))
     }
     
     override func viewDidLayoutSubviews() {
@@ -95,8 +90,25 @@ class QuizzesViewController: UIViewController {
         
         gradiantLayer.frame = view.bounds
     }
+
+    func getQuizzes() {
+        quizRepository.fetchData(completionHandler: { [self] quizzes in
+            guard quizzes.count > 0 else { return }
+            
+            data = QuizCategory.allCases.map { category -> [Quiz] in
+                return quizzes.filter { $0.category == category }
+            }
+            let questions = quizzes.flatMap { $0.questions }.map { $0.question }
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.funFactLabel.text = "There are \(questions.filter({ $0.contains("NBA") }).count) questions that contain the word \"NBA\""
+                
+                self?.tableView.reloadData()
+            }
+        })
+    }
     
-    @objc func getQuizzes(_ sender: UIButton!) {
+    /*@objc func getQuizzes(_ sender: UIButton!) {
         getQuizzesButton.isEnabled = false
         networkService.fetchQuizes(completionHandler: { [self] (result: Result<Quizzes, RequestError>) in
             DispatchQueue.main.async { self.getQuizzesButton.isEnabled = true }
@@ -117,7 +129,7 @@ class QuizzesViewController: UIViewController {
                 }
             }
         })
-    }
+    }*/
 }
 
 extension QuizzesViewController : UITableViewDataSource {

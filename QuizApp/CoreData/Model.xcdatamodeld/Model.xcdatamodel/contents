@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D80" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDQuestion" representedClassName="CDQuestion" syncable="YES">
+        <attribute name="answers" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="correctAnswer" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="identifier" attributeType="Integer 64" usesScalarValueType="YES"/>
+        <attribute name="question" attributeType="String"/>
+        <relationship name="quiz" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDQuiz" inverseName="questions" inverseEntity="CDQuiz"/>
+    </entity>
+    <entity name="CDQuiz" representedClassName="CDQuiz" syncable="YES">
+        <attribute name="category" attributeType="String"/>
+        <attribute name="desc" attributeType="String"/>
+        <attribute name="identifier" attributeType="Integer 64" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String"/>
+        <attribute name="level" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" attributeType="String" spotlightIndexingEnabled="YES"/>
+        <relationship name="questions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDQuestion" inverseName="quiz" inverseEntity="CDQuestion"/>
+    </entity>
+    <elements>
+        <element name="CDQuestion" positionX="-75.2598876953125" positionY="171.9544067382812" width="128" height="104"/>
+        <element name="CDQuiz" positionX="-63" positionY="-18" width="128" height="149"/>
+    </elements>
+</model>

@@ -48,6 +48,7 @@
                             <textInputTraits key="textInputTraits" autocorrectionType="no" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                             <connections>
                                 <action selector="HideStatus:" destination="-1" eventType="editingChanged" id="aJV-H0-QKy"/>
+                                <outlet property="delegate" destination="-1" id="fV0-y1-Dzp"/>
                             </connections>
                         </textField>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FMP-JA-oaI">

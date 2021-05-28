@@ -34,19 +34,27 @@ class AppRouter : AppRouterProtocol {
     }
     
     func showQuizzes(animated: Bool = true) {
-        let vc = QuizzesViewController(router: self)
+        let coreDataContext = CoreDataStack(modelName: "Model").managedContext
+        let quizRepository = QuizRepository(databaseDataSource: QuizDatabaseDataSource(coreDataContext: coreDataContext), networkDataSource: QuizNetworkDataSource())
+        
+        let vc = QuizzesViewController(router: self, quizRepository: quizRepository)
         
         navigationController.setViewControllers([vc], animated: animated)
     }
     
     func showTab(animated: Bool = true) {
-        let vQuizzes = QuizzesViewController(router: self)
+        let coreDataContext = CoreDataStack(modelName: "Model").managedContext
+        let quizRepository = QuizRepository(databaseDataSource: QuizDatabaseDataSource(coreDataContext: coreDataContext), networkDataSource: QuizNetworkDataSource())
+        
+        let vQuizzes = QuizzesViewController(router: self, quizRepository: quizRepository)
         vQuizzes.tabBarItem = UITabBarItem(title: "Quizzes", image: #imageLiteral(resourceName: "QuizzesU"), selectedImage: #imageLiteral(resourceName: "QuizzesS"))
+        let vSearch = SearchQuizViewController(router: self, quizRepository: quizRepository)
+        vSearch.tabBarItem = UITabBarItem(title: "Search", image: #imageLiteral(resourceName: "SearchU"), selectedImage: #imageLiteral(resourceName: "SearchS"))
         let vSettings = SettingsViewController(router: self)
         vSettings.tabBarItem = UITabBarItem(title: "Settings", image: #imageLiteral(resourceName: "SettingsU"), selectedImage: #imageLiteral(resourceName: "SettingsS"))
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [vQuizzes, vSettings]
+        tabBarController.viewControllers = [vQuizzes, vSearch, vSettings]
         tabBarController.tabBar.tintColor = .purple
         tabBarController.tabBar.backgroundColor = .white
         
