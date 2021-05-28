@@ -9,8 +9,8 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var usernameTextField: CustomTextField!
+    @IBOutlet weak var passwordTextField: CustomTextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var statusLabel: UILabel!
     
@@ -35,8 +35,8 @@ class LoginViewController: UIViewController {
         gradiantLayer.endPoint = CGPoint(x: 1, y: 0)
         view.layer.insertSublayer(gradiantLayer, at: 0)
         
-        usernameTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.3)])
-        passwordTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.3)])
+        usernameTextField.setPlaceholderText("Email")
+        passwordTextField.setPlaceholderText("Password")
     }
     
     override func viewDidLayoutSubviews() {
@@ -90,12 +90,13 @@ class LoginViewController: UIViewController {
         }) { (finished) in
             self.statusLabel.isHidden = true
         }
-    }
-}
-
-extension LoginViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        LoginButton(self)
-        return true
+        
+        if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
+            loginButton.isEnabled = false
+            loginButton.backgroundColor = .init(white: 1, alpha: 0.3)
+        } else {
+            loginButton.isEnabled = true
+            loginButton.backgroundColor = .init(white: 1, alpha: 1)
+        }
     }
 }

@@ -16,7 +16,7 @@ class SearchQuizViewController: UIViewController {
     private var data: [[Quiz]]!
     
     private var gradiantLayer: CAGradientLayer!
-    private var searchTextField: UITextField!
+    private var searchTextField: CustomTextField!
     private var searchButton: UIButton!
     private var tableView: UITableView!
     
@@ -50,16 +50,9 @@ class SearchQuizViewController: UIViewController {
         searchButton.autoPinEdge(toSuperviewMargin: .top, withInset: 10)
         searchButton.autoPinEdge(toSuperviewMargin: .trailing, withInset: 20)
         
-        searchTextField = UITextField()
-        searchTextField.textColor = .white
-        searchTextField.backgroundColor = .init(white: 1, alpha: 0.3)
-        searchTextField.attributedPlaceholder = NSAttributedString(string: "Type here", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.3)])
-        searchTextField.returnKeyType = .search
-        searchTextField.layer.cornerRadius = 25
-        searchTextField.layer.borderWidth = 0
-        searchTextField.layer.borderColor = .init(gray: 1, alpha: 1)
-        searchTextField.leftView = .init(frame: .init(x: 0, y: 0, width: 25, height: 50))
-        searchTextField.leftViewMode = .always
+        searchTextField = CustomTextField()
+        searchTextField.setPlaceholderText("Type here")
+        searchTextField.setCornerRadius(25)
         searchTextField.delegate = self
         view.addSubview(searchTextField)
         searchTextField.autoPinEdge(.top, to: .top, of: searchButton)

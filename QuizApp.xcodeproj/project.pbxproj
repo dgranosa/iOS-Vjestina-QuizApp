@@ -34,6 +34,7 @@
 		527326F82660870C00FB36B7 /* CDQuestion+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527326F42660870C00FB36B7 /* CDQuestion+CoreDataProperties.swift */; };
 		527326F92660870C00FB36B7 /* CDQuiz+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527326F52660870C00FB36B7 /* CDQuiz+CoreDataClass.swift */; };
 		527326FA2660870C00FB36B7 /* CDQuiz+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527326F62660870C00FB36B7 /* CDQuiz+CoreDataProperties.swift */; };
+		527326FE26608C0200FB36B7 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527326FD26608C0200FB36B7 /* CustomTextField.swift */; };
 		5285FC0F264EE80C00669CCE /* LeaderboardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5285FC0E264EE80C00669CCE /* LeaderboardViewCell.swift */; };
 		529C4AE32651763B00CE2CA6 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529C4AE22651763B00CE2CA6 /* UIViewController+Alert.swift */; };
 		529C4AE6265186DE00CE2CA6 /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529C4AE5265186DE00CE2CA6 /* EmptyResponse.swift */; };
@@ -80,6 +81,7 @@
 		527326F42660870C00FB36B7 /* CDQuestion+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDQuestion+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		527326F52660870C00FB36B7 /* CDQuiz+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDQuiz+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		527326F62660870C00FB36B7 /* CDQuiz+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDQuiz+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		527326FD26608C0200FB36B7 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		5285FC0E264EE80C00669CCE /* LeaderboardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewCell.swift; sourceTree = "<group>"; };
 		529C4AE22651763B00CE2CA6 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		529C4AE5265186DE00CE2CA6 /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				527326EE266083F100FB36B7 /* Search */,
 				5231D516264EDB8900B093F6 /* Settings */,
 				529C4AE22651763B00CE2CA6 /* UIViewController+Alert.swift */,
+				527326FD26608C0200FB36B7 /* CustomTextField.swift */,
 			);
 			path = QuizApp;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				529C4B2E265EE88700CE2CA6 /* QuizDatabaseDataSource.swift in Sources */,
 				5231D4F1264E020000B093F6 /* QuizViewController.swift in Sources */,
 				52DF3BC0264C553800E7E7D6 /* Quizzes.swift in Sources */,
+				527326FE26608C0200FB36B7 /* CustomTextField.swift in Sources */,
 				527326F72660870C00FB36B7 /* CDQuestion+CoreDataClass.swift in Sources */,
 				5285FC0F264EE80C00669CCE /* LeaderboardViewCell.swift in Sources */,
 				52577D81261E5C7D00A6A29F /* SceneDelegate.swift in Sources */,

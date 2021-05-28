@@ -23,19 +23,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QuizApp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEt-kV-yvd">
-                    <rect key="frame" x="0.0" y="64" width="414" height="41"/>
-                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                    <rect key="frame" x="0.0" y="114" width="414" height="50.5"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="42"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Rh3-aT-XHl">
-                    <rect key="frame" x="30" y="352.5" width="354" height="191"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Rh3-aT-XHl">
+                    <rect key="frame" x="30" y="353" width="354" height="190"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E6B-ZV-bwy">
-                            <rect key="frame" x="0.0" y="0.0" width="354" height="60"/>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E6B-ZV-bwy" customClass="CustomTextField" customModule="QuizApp" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="354" height="50"/>
                             <color key="backgroundColor" white="1" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="60" id="78c-lo-ssz"/>
+                                <constraint firstAttribute="height" constant="50" id="78c-lo-ssz"/>
                             </constraints>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -44,33 +44,33 @@
                                 <action selector="HideStatus:" destination="-1" eventType="editingChanged" id="IIH-Ou-HGF"/>
                             </connections>
                         </textField>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3hV-Hj-XtY">
-                            <rect key="frame" x="0.0" y="65" width="354" height="61.5"/>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3hV-Hj-XtY" customClass="CustomTextField" customModule="QuizApp" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="70" width="354" height="50"/>
                             <color key="backgroundColor" white="1" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="password"/>
                             <connections>
                                 <action selector="HideStatus:" destination="-1" eventType="editingChanged" id="aJV-H0-QKy"/>
-                                <outlet property="delegate" destination="-1" id="fV0-y1-Dzp"/>
                             </connections>
                         </textField>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FMP-JA-oaI">
-                            <rect key="frame" x="0.0" y="128" width="354" height="0.0"/>
+                            <rect key="frame" x="0.0" y="110.5" width="354" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" systemColor="systemRedColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsr-gg-zq6">
-                            <rect key="frame" x="0.0" y="131.5" width="354" height="59.5"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsr-gg-zq6">
+                            <rect key="frame" x="0.0" y="140" width="354" height="50"/>
+                            <color key="backgroundColor" white="1" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="Login">
                                 <color key="titleColor" red="0.29786661269999998" green="0.2411906123" blue="0.54896014930000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="5"/>
+                                    <integer key="value" value="25"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
@@ -79,7 +79,8 @@
                         </button>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="3hV-Hj-XtY" firstAttribute="height" secondItem="E6B-ZV-bwy" secondAttribute="height" multiplier="1.01852" id="Ziw-qI-NF3"/>
+                        <constraint firstItem="3hV-Hj-XtY" firstAttribute="height" secondItem="E6B-ZV-bwy" secondAttribute="height" id="Ziw-qI-NF3"/>
+                        <constraint firstItem="vsr-gg-zq6" firstAttribute="height" secondItem="E6B-ZV-bwy" secondAttribute="height" id="kdM-2v-Gav"/>
                     </constraints>
                 </stackView>
             </subviews>
@@ -91,7 +92,7 @@
                 <constraint firstItem="Rh3-aT-XHl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="Sdo-Bv-xMI"/>
                 <constraint firstItem="XEt-kV-yvd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Zd4-CT-DXZ"/>
                 <constraint firstItem="Rh3-aT-XHl" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="hXc-xW-FZg"/>
-                <constraint firstItem="XEt-kV-yvd" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="sUt-Zk-sFW"/>
+                <constraint firstItem="XEt-kV-yvd" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="70" id="sUt-Zk-sFW"/>
             </constraints>
             <point key="canvasLocation" x="688" y="195"/>
         </view>
