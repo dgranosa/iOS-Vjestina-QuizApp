@@ -34,6 +34,9 @@ class LoginViewController: UIViewController {
         gradiantLayer.startPoint = CGPoint(x: 0, y: 1)
         gradiantLayer.endPoint = CGPoint(x: 1, y: 0)
         view.layer.insertSublayer(gradiantLayer, at: 0)
+        
+        usernameTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.3)])
+        passwordTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.3)])
     }
     
     override func viewDidLayoutSubviews() {
