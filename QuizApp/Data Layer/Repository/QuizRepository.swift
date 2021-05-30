@@ -8,11 +8,6 @@ class QuizRepository {
         self.networkDataSource = networkDataSource
     }
     
-    func fetchData(completionHandler: @escaping ([Quiz]) -> Void) {
-        completionHandler(fetchLocalData())
-        fetchRemoteData(completionHandler: completionHandler)
-    }
-    
     func fetchLocalData(titleFilter: String? = nil) -> [Quiz] {
         return databaseDataSource.fetchQuizzes(filter: titleFilter)
     }

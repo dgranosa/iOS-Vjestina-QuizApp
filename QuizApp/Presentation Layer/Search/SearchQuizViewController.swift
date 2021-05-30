@@ -11,19 +11,16 @@ import PureLayout
 class SearchQuizViewController: UIViewController {
 
     let cellId = "searchCellId"
-    private var router: AppRouter!
-    private var quizRepository: QuizRepository!
-    private var data: [[Quiz]]!
+    private var presenter: QuizzesPresenter!
     
     private var gradiantLayer: CAGradientLayer!
     private var searchTextField: CustomTextField!
     private var searchButton: UIButton!
     private var tableView: UITableView!
     
-    convenience init(router: AppRouter, quizRepository: QuizRepository) {
+    convenience init(presenter: QuizzesPresenter) {
         self.init()
-        self.router = router
-        self.quizRepository = quizRepository
+        self.presenter = presenter
     }
     
     override func viewDidLoad() {
@@ -73,42 +70,30 @@ class SearchQuizViewController: UIViewController {
     }
     
     @objc func fetchQuizzes(_ sender: UIButton!) {
-        let quizzes = quizRepository.fetchLocalData(titleFilter: searchTextField.text)
-        
-        data = QuizCategory.allCases.map { category -> [Quiz] in
-            return quizzes.filter { $0.category == category }
-        }.filter { !$0.isEmpty }
+        presenter.fetchData(filter: searchTextField.text ?? "")
         tableView.reloadData()
     }
-
 }
 
 extension SearchQuizViewController : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        if data == nil {
-            return 0
-        }
-        
-        return data.count
+        presenter.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if data == nil {
-            return 0
-        }
-        
-        return data[section].count
+        presenter.numberOfRows(for: section)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        router.showQuiz(quiz: data[indexPath.section][indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
+        presenter.showQuiz(at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! QuizzesViewCell
         
-        cell.setQuiz(quiz: data[indexPath.section][indexPath.row])
+        let quiz = presenter.quizForIndexPath(indexPath)
+        cell.setQuiz(quiz: quiz)
         
         return cell
     }
@@ -124,7 +109,7 @@ extension SearchQuizViewController : UITableViewDelegate {
         let view = UIView()
         
         let label = UILabel()
-        label.text = data[section].first!.category.rawValue.capitalized
+        label.text = presenter.titleForSection(section)
         label.font = UIFont.preferredFont(forTextStyle: .title2)
         label.textColor = .white
         

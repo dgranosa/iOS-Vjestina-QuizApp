@@ -11,9 +11,7 @@ import PureLayout
 class QuizzesViewController: UIViewController {
     
     let cellId = "quizzesCellId"
-    private var router: AppRouter!
-    private var quizRepository: QuizRepository!
-    private var data: [[Quiz]]!
+    private var presenter: QuizzesPresenter!
     
     private var gradiantLayer: CAGradientLayer!
     private var stackView: UIStackView!
@@ -22,10 +20,9 @@ class QuizzesViewController: UIViewController {
     private var funFactTitleLabel: UILabel!
     private var funFactLabel: UILabel!
     
-    convenience init(router: AppRouter, quizRepository: QuizRepository) {
+    convenience init(presenter: QuizzesPresenter) {
         self.init()
-        self.router = router
-        self.quizRepository = quizRepository
+        self.presenter = presenter
     }
 
     override func viewDidLoad() {
@@ -92,72 +89,34 @@ class QuizzesViewController: UIViewController {
     }
 
     func getQuizzes() {
-        quizRepository.fetchData(completionHandler: { [self] quizzes in
-            guard quizzes.count > 0 else { return }
-            
-            data = QuizCategory.allCases.map { category -> [Quiz] in
-                return quizzes.filter { $0.category == category }
-            }
-            let questions = quizzes.flatMap { $0.questions }.map { $0.question }
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.funFactLabel.text = "There are \(questions.filter({ $0.contains("NBA") }).count) questions that contain the word \"NBA\""
-                
-                self?.tableView.reloadData()
+        presenter.fetchData(completionHandler: {
+            DispatchQueue.main.async {
+                self.funFactLabel.text = "There are \(self.presenter.funFact()) questions that contain the word \"NBA\""
+                self.tableView.reloadData()
             }
         })
     }
-    
-    /*@objc func getQuizzes(_ sender: UIButton!) {
-        getQuizzesButton.isEnabled = false
-        networkService.fetchQuizes(completionHandler: { [self] (result: Result<Quizzes, RequestError>) in
-            DispatchQueue.main.async { self.getQuizzesButton.isEnabled = true }
-            
-            switch result {
-            case .failure(let error):
-                handleError(error)
-            case .success(let q):
-                let quizzes = q.quizzes
-                data = Array(Set(quizzes.map({ $0.category }))).map({ (category) -> [Quiz] in
-                    return quizzes.filter({ $0.category == category })
-                })
-                
-                DispatchQueue.main.async { [self] in
-                    tableView.reloadData()
-                    
-                    funFactLabel.text = "There are \(quizzes.flatMap({ $0.questions }).map({ $0.question }).filter({ $0.contains("NBA") }).count) questions that contain the word \"NBA\""
-                }
-            }
-        })
-    }*/
 }
 
 extension QuizzesViewController : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        if data == nil {
-            return 0
-        }
-        
-        return data.count
+        presenter.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if data == nil {
-            return 0
-        }
-        
-        return data[section].count
+        presenter.numberOfRows(for: section)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        router.showQuiz(quiz: data[indexPath.section][indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
+        presenter.showQuiz(at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! QuizzesViewCell
         
-        cell.setQuiz(quiz: data[indexPath.section][indexPath.row])
+        let quiz = presenter.quizForIndexPath(indexPath)
+        cell.setQuiz(quiz: quiz)
         
         return cell
     }
@@ -173,7 +132,7 @@ extension QuizzesViewController : UITableViewDelegate {
         let view = UIView()
         
         let label = UILabel()
-        label.text = "\(data[section].first!.category)".capitalized
+        label.text = presenter.titleForSection(section)
         label.font = UIFont.preferredFont(forTextStyle: .title2)
         label.textColor = .white
         

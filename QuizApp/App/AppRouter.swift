@@ -36,8 +36,9 @@ class AppRouter : AppRouterProtocol {
     func showQuizzes(animated: Bool = true) {
         let coreDataContext = CoreDataStack(modelName: "Model").managedContext
         let quizRepository = QuizRepository(databaseDataSource: QuizDatabaseDataSource(coreDataContext: coreDataContext), networkDataSource: QuizNetworkDataSource())
-        
-        let vc = QuizzesViewController(router: self, quizRepository: quizRepository)
+        let quizUseCase = QuizUseCase(quizRepository: quizRepository)
+        let quizzesPresenter = QuizzesPresenter(router: self, quizUseCase: quizUseCase)
+        let vc = QuizzesViewController(presenter: quizzesPresenter)
         
         navigationController.setViewControllers([vc], animated: animated)
     }
@@ -45,11 +46,16 @@ class AppRouter : AppRouterProtocol {
     func showTab(animated: Bool = true) {
         let coreDataContext = CoreDataStack(modelName: "Model").managedContext
         let quizRepository = QuizRepository(databaseDataSource: QuizDatabaseDataSource(coreDataContext: coreDataContext), networkDataSource: QuizNetworkDataSource())
+        let quizUseCase = QuizUseCase(quizRepository: quizRepository)
         
-        let vQuizzes = QuizzesViewController(router: self, quizRepository: quizRepository)
+        let quizzesPresenter = QuizzesPresenter(router: self, quizUseCase: quizUseCase)
+        let vQuizzes = QuizzesViewController(presenter: quizzesPresenter)
         vQuizzes.tabBarItem = UITabBarItem(title: "Quizzes", image: #imageLiteral(resourceName: "QuizzesU"), selectedImage: #imageLiteral(resourceName: "QuizzesS"))
-        let vSearch = SearchQuizViewController(router: self, quizRepository: quizRepository)
+        
+        let searchPresenter = QuizzesPresenter(router: self, quizUseCase: quizUseCase)
+        let vSearch = SearchQuizViewController(presenter: searchPresenter)
         vSearch.tabBarItem = UITabBarItem(title: "Search", image: #imageLiteral(resourceName: "SearchU"), selectedImage: #imageLiteral(resourceName: "SearchS"))
+        
         let vSettings = SettingsViewController(router: self)
         vSettings.tabBarItem = UITabBarItem(title: "Settings", image: #imageLiteral(resourceName: "SettingsU"), selectedImage: #imageLiteral(resourceName: "SettingsS"))
         
