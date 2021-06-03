@@ -9,6 +9,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var usernameTextField: CustomTextField!
     @IBOutlet weak var passwordTextField: CustomTextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -37,6 +38,8 @@ class LoginViewController: UIViewController {
         
         usernameTextField.setPlaceholderText("Email")
         passwordTextField.setPlaceholderText("Password")
+        
+        popInAnimation()
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,7 +81,9 @@ class LoginViewController: UIViewController {
                 userDefaults.set(loginStatus.userId, forKey: "userId")
                 
                 DispatchQueue.main.async {
-                    router.showTab()
+                    popOutAnimation(onCompletion: {_ in
+                        router.showTab()
+                    })
                 }
             }
         })
@@ -98,5 +103,60 @@ class LoginViewController: UIViewController {
             loginButton.isEnabled = true
             loginButton.backgroundColor = UIColor(white: 1, alpha: 1)
         }
+    }
+    
+    func popInAnimation() {
+        titleLabel.transform = CGAffineTransform(scaleX: 0, y: 0)
+        titleLabel.alpha = 0
+        
+        usernameTextField.transform = CGAffineTransform(translationX: -usernameTextField.frame.maxX, y: 0)
+        usernameTextField.alpha = 0
+        
+        passwordTextField.transform = CGAffineTransform(translationX: -passwordTextField.frame.maxX, y: 0)
+        passwordTextField.alpha = 0
+        
+        loginButton.transform = CGAffineTransform(translationX: -loginButton.frame.maxX, y: 0)
+        loginButton.alpha = 0
+        
+        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseInOut, animations: { [self] in
+            titleLabel.transform = .identity
+            titleLabel.alpha = 1
+            
+            usernameTextField.transform = .identity
+            usernameTextField.alpha = 1
+        }, completion: nil)
+        
+        UIView.animate(withDuration: 1, delay: 0.25, options: .curveEaseInOut, animations: { [self] in
+            passwordTextField.transform = .identity
+            passwordTextField.alpha = 1
+        }, completion: nil)
+        
+        UIView.animate(withDuration: 1, delay: 0.5, options: .curveEaseInOut, animations: { [self] in
+            loginButton.transform = .identity
+            loginButton.alpha = 1
+        }, completion: nil)
+    }
+    
+    func popOutAnimation(onCompletion: @escaping (Bool) -> Void) {
+        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseInOut, animations: { [self] in
+            titleLabel.transform = CGAffineTransform(translationX: 0, y: -titleLabel.frame.maxY)
+            titleLabel.alpha = 0
+        }, completion: nil)
+        
+        UIView.animate(withDuration: 1, delay: 0.25, options: .curveEaseInOut, animations: { [self] in
+            usernameTextField.transform = CGAffineTransform(translationX: 0, y: -view.convert(usernameTextField.frame, from: usernameTextField.superview).maxY)
+            usernameTextField.alpha = 0
+        }, completion: nil)
+        
+        UIView.animate(withDuration: 1, delay: 0.5, options: .curveEaseInOut, animations: { [self] in
+            passwordTextField.transform = CGAffineTransform(translationX: 0, y: -view.convert(passwordTextField.frame, from: passwordTextField.superview).maxY)
+            passwordTextField.alpha = 0
+        }, completion: nil)
+        
+        UIView.animate(withDuration: 1, delay: 0.75, options: .curveEaseInOut, animations: { [self] in
+            loginButton.transform = CGAffineTransform(translationX: 0, y: -view.convert(loginButton.frame, from: loginButton.superview).maxY)
+            loginButton.alpha = 0
+        }, completion: onCompletion)
+        
     }
 }
