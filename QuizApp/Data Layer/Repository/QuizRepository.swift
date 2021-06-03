@@ -13,7 +13,8 @@ class QuizRepository {
     }
     
     func fetchRemoteData(completionHandler: @escaping ([Quiz]) -> Void) {
-        networkDataSource.fetchQuizzes(completionHandler: { [self] quizzes in
+        networkDataSource.fetchQuizzes(completionHandler: { [self] q in
+            let quizzes = networkDataSource.fetcgQuizzesImages(quizzes: q)
             databaseDataSource.saveQuizzes(quizzes)
             completionHandler(quizzes)
         })

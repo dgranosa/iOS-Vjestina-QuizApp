@@ -39,7 +39,7 @@ class QuestionTrackerView: UIView {
         views = []
         for _ in 1...numOfQuestions {
             let v = UIView()
-            v.backgroundColor = .init(white: 1, alpha: 0.5)
+            v.backgroundColor = UIColor(white: 1, alpha: 0.5)
             v.layer.cornerRadius = 3
             views.append(v)
             stackView.addArrangedSubview(v)

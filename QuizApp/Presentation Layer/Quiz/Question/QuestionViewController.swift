@@ -68,7 +68,7 @@ class QuestionViewController: UIViewController {
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
         view.addSubview(titleLabel)
-        titleLabel.autoPinEdgesToSuperviewEdges(with: .init(top: 45, left: 0, bottom: -1, right: 0), excludingEdge: .bottom)
+        titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 45, left: 0, bottom: -1, right: 0), excludingEdge: .bottom)
         
         currQuestionLabel = UILabel()
         currQuestionLabel.text = "?/?"
@@ -93,14 +93,14 @@ class QuestionViewController: UIViewController {
         questionLabel.numberOfLines = 0
         view.addSubview(questionLabel)
         questionLabel.autoSetDimension(.height, toSize: 110)
-        questionLabel.autoPinEdgesToSuperviewEdges(with: .init(top: 180, left: 20, bottom: -1, right: 20), excludingEdge: .bottom)
+        questionLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 180, left: 20, bottom: -1, right: 20), excludingEdge: .bottom)
         
         answer1Button = UIButton()
         answer1Button.setTitle("Answer #1", for: .normal)
-        answer1Button.backgroundColor = .init(white: 1, alpha: 0.3)
+        answer1Button.backgroundColor = UIColor(white: 1, alpha: 0.3)
         answer1Button.layer.cornerRadius = 27
         answer1Button.contentHorizontalAlignment = .left
-        answer1Button.titleEdgeInsets = .init(top: 0, left: 30, bottom: 0, right: 0)
+        answer1Button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0)
         answer1Button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         answer1Button.addTarget(self, action: #selector(self.answer), for: .touchUpInside)
         view.addSubview(answer1Button)
@@ -111,10 +111,10 @@ class QuestionViewController: UIViewController {
         
         answer2Button = UIButton()
         answer2Button.setTitle("Answer #2", for: .normal)
-        answer2Button.backgroundColor = .init(white: 1, alpha: 0.3)
+        answer2Button.backgroundColor = UIColor(white: 1, alpha: 0.3)
         answer2Button.layer.cornerRadius = 27
         answer2Button.contentHorizontalAlignment = .left
-        answer2Button.titleEdgeInsets = .init(top: 0, left: 30, bottom: 0, right: 0)
+        answer2Button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0)
         answer2Button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         answer2Button.addTarget(self, action: #selector(self.answer), for: .touchUpInside)
         view.addSubview(answer2Button)
@@ -125,10 +125,10 @@ class QuestionViewController: UIViewController {
         
         answer3Button = UIButton()
         answer3Button.setTitle("Answer #3", for: .normal)
-        answer3Button.backgroundColor = .init(white: 1, alpha: 0.3)
+        answer3Button.backgroundColor = UIColor(white: 1, alpha: 0.3)
         answer3Button.layer.cornerRadius = 27
         answer3Button.contentHorizontalAlignment = .left
-        answer3Button.titleEdgeInsets = .init(top: 0, left: 30, bottom: 0, right: 0)
+        answer3Button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0)
         answer3Button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         answer3Button.addTarget(self, action: #selector(self.answer), for: .touchUpInside)
         view.addSubview(answer3Button)
@@ -139,10 +139,10 @@ class QuestionViewController: UIViewController {
         
         answer4Button = UIButton()
         answer4Button.setTitle("Answer #4", for: .normal)
-        answer4Button.backgroundColor = .init(white: 1, alpha: 0.3)
+        answer4Button.backgroundColor = UIColor(white: 1, alpha: 0.3)
         answer4Button.layer.cornerRadius = 27
         answer4Button.contentHorizontalAlignment = .left
-        answer4Button.titleEdgeInsets = .init(top: 0, left: 30, bottom: 0, right: 0)
+        answer4Button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0)
         answer4Button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         answer4Button.addTarget(self, action: #selector(self.answer), for: .touchUpInside)
         view.addSubview(answer4Button)
@@ -170,7 +170,7 @@ class QuestionViewController: UIViewController {
         
         for (index, bAnswer) in answerButtons.enumerated() {
             bAnswer.setTitle(question.answers[index], for: .normal)
-            bAnswer.backgroundColor = .init(white: 1, alpha: 0.3)
+            bAnswer.backgroundColor = UIColor(white: 1, alpha: 0.3)
             bAnswer.isEnabled = true
         }
     }

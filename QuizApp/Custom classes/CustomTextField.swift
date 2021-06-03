@@ -20,12 +20,12 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     
     private func commonInit() {
         textColor = .white
-        backgroundColor = .init(white: 1, alpha: 0.3)
-        attributedPlaceholder = NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.3)])
+        backgroundColor = UIColor(white: 1, alpha: 0.3)
+        attributedPlaceholder = NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor(white: 1, alpha: 0.3)])
         layer.borderWidth = 0
-        layer.borderColor = .init(gray: 1, alpha: 1)
+        layer.borderColor = CGColor(gray: 1, alpha: 1)
         layer.cornerRadius = frame.height/2
-        leftView = .init(frame: .init(x: 0, y: 0, width: frame.height/2, height: frame.height))
+        leftView = UIView(frame: CGRect(x: 0, y: 0, width: frame.height/2, height: frame.height))
         leftViewMode = .always
         delegate = self
     }
@@ -36,7 +36,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     
     func setCornerRadius(_ radius: CGFloat) {
         layer.cornerRadius = radius
-        leftView = .init(frame: .init(x: 0, y: 0, width: radius, height: radius*2))
+        leftView = UIView(frame: CGRect(x: 0, y: 0, width: radius, height: radius*2))
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

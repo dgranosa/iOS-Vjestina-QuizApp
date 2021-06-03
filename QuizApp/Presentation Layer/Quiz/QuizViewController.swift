@@ -56,10 +56,10 @@ class QuizViewController: UIViewController {
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
         view.addSubview(titleLabel)
-        titleLabel.autoPinEdgesToSuperviewEdges(with: .init(top: 45, left: 0, bottom: -1, right: 0), excludingEdge: .bottom)
+        titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 45, left: 0, bottom: -1, right: 0), excludingEdge: .bottom)
         
         quizView = UIView()
-        quizView.backgroundColor = .init(white: 1, alpha: 0.3)
+        quizView.backgroundColor = UIColor(white: 1, alpha: 0.3)
         quizView.layer.cornerRadius = 10
         
         quizTitleLabel = UILabel()
@@ -92,7 +92,7 @@ class QuizViewController: UIViewController {
         quizStartButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         quizView.addSubview(quizStartButton)
         
-        quizTitleLabel.autoPinEdgesToSuperviewEdges(with: .init(top: 20, left: 20, bottom: -1, right: 20), excludingEdge: .bottom)
+        quizTitleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 20, bottom: -1, right: 20), excludingEdge: .bottom)
         quizDescLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
         quizDescLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
         quizDescLabel.autoPinEdge(.top, to: .bottom, of: quizTitleLabel, withOffset: 20)
@@ -107,7 +107,7 @@ class QuizViewController: UIViewController {
         
         view.addSubview(quizView)
         quizView.autoSetDimension(.height, toSize: 420)
-        quizView.autoPinEdgesToSuperviewEdges(with: .init(top: 200, left: 20, bottom: -1, right: 20), excludingEdge: .bottom)
+        quizView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 200, left: 20, bottom: -1, right: 20), excludingEdge: .bottom)
         
         if let imageData = quiz.imageData { quizImageView.image = UIImage(data: imageData) }
         

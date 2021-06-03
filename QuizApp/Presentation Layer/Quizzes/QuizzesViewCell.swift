@@ -28,7 +28,7 @@ class QuizzesViewCell: UITableViewCell {
         
         v = UIView()
         
-        v.backgroundColor = .init(white: 1, alpha: 0.3)
+        v.backgroundColor = UIColor(white: 1, alpha: 0.3)
         v.layer.cornerRadius = 10
         
         let hStackView = UIStackView()
@@ -85,7 +85,7 @@ class QuizzesViewCell: UITableViewCell {
         
         addSubview(v)
         
-        v.autoPinEdgesToSuperviewEdges(with: .init(top: 5, left: 0, bottom: 5, right: 0))
+        v.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0))
     }
     
     required init?(coder: NSCoder) {

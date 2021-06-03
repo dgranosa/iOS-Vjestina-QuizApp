@@ -79,7 +79,7 @@ class QuizzesViewController: UIViewController {
         
         view.addSubview(stackView)
         
-        stackView.autoPinEdgesToSuperviewSafeArea(with: .init(top: 5, left: 20, bottom: 0, right: 20))
+        stackView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 5, left: 20, bottom: 0, right: 20))
     }
     
     override func viewDidLayoutSubviews() {
@@ -91,7 +91,7 @@ class QuizzesViewController: UIViewController {
     func getQuizzes() {
         presenter.fetchData(completionHandler: {
             DispatchQueue.main.async {
-                self.funFactLabel.text = "There are \(self.presenter.funFact()) questions that contain the word \"NBA\""
+                self.funFactLabel.text = "There are \(self.presenter.funFact) questions that contain the word \"NBA\""
                 self.tableView.reloadData()
             }
         })
@@ -100,7 +100,7 @@ class QuizzesViewController: UIViewController {
 
 extension QuizzesViewController : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        presenter.numberOfSections()
+        presenter.numberOfSections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

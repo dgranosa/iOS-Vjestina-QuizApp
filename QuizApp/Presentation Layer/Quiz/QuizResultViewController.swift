@@ -54,7 +54,7 @@ class QuizResultViewController: UIViewController {
         finishButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         view.addSubview(finishButton)
         finishButton.autoSetDimension(.height, toSize: 50)
-        finishButton.autoPinEdgesToSuperviewEdges(with: .init(top: -1, left: 40, bottom: 50, right: 40), excludingEdge: .top)
+        finishButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: -1, left: 40, bottom: 50, right: 40), excludingEdge: .top)
         
         leadeboardButton = UIButton()
         leadeboardButton.setTitle("Show leaderboard", for: .normal)
@@ -75,7 +75,7 @@ class QuizResultViewController: UIViewController {
         resultLabel.textColor = .white
         resultLabel.textAlignment = .center
         view.addSubview(resultLabel)
-        resultLabel.autoPinEdgesToSuperviewEdges(with: .init(top: 0, left: 0, bottom: -1, right: 0), excludingEdge: .bottom)
+        resultLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: -1, right: 0), excludingEdge: .bottom)
         resultLabel.autoPinEdge(.bottom, to: .top, of: finishButton)
     }
     
@@ -99,9 +99,9 @@ class QuizResultViewController: UIViewController {
             case .failure(_):
                 let alert = UIAlertController(title: "Error", message: "Was not able to submit quiz result", preferredStyle: .alert)
                 
-                alert.addAction(.init(title: "Dismiss", style: .destructive, handler: nil))
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .destructive, handler: nil))
                 
-                alert.addAction(.init(title: "Retry", style: .default, handler: {_ in
+                alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {_ in
                     submitResult()
                 }))
                 

@@ -67,7 +67,7 @@ class SettingsViewController: UIViewController {
         lUsername.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 20)
         
         view.addSubview(bLogout)
-        bLogout.autoPinEdgesToSuperviewSafeArea(with: .init(top: -1, left: 20, bottom: 40, right: 20), excludingEdge: .top)
+        bLogout.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: -1, left: 20, bottom: 40, right: 20), excludingEdge: .top)
         bLogout.autoSetDimension(.height, toSize: 50)
     }
     

@@ -50,7 +50,7 @@ class LeaderboardViewController: UIViewController {
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
         view.addSubview(titleLabel)
-        titleLabel.autoPinEdgesToSuperviewEdges(with: .init(top: 45, left: 0, bottom: -1, right: 0), excludingEdge: .bottom)
+        titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 45, left: 0, bottom: -1, right: 0), excludingEdge: .bottom)
         
         backButton = UIButton()
         backButton.setImage(#imageLiteral(resourceName: "CloseButton"), for: .normal)
@@ -68,7 +68,7 @@ class LeaderboardViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewEdges(with: .init(top: 180, left: 0, bottom: 0, right: 0))
+        tableView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 180, left: 0, bottom: 0, right: 0))
         
         playerLabel = UILabel()
         playerLabel.text = "Player"

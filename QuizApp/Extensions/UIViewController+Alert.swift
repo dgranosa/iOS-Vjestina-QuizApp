@@ -19,7 +19,7 @@ extension UIViewController {
     func errorAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        alert.addAction(.init(title: "Dismiss", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
     }

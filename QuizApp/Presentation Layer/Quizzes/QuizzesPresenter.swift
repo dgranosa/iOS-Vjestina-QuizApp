@@ -30,11 +30,15 @@ class QuizzesPresenter {
         }
     }
     
-    func funFact() -> Int {
-        quizzes.flatMap { $0.questions }.map { $0.question }.filter({ $0.contains("NBA") }).count
+    var funFact: Int {
+        quizzes
+            .flatMap { $0.questions }
+            .map { $0.question }
+            .filter({ $0.contains("NBA") })
+            .count
     }
     
-    func numberOfSections() -> Int {
+    var numberOfSections: Int {
         categories.count
     }
     

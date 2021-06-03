@@ -20,12 +20,4 @@ struct Quiz: Codable {
         case imageUrl = "image"
         case questions
     }
-    
-    mutating func getImage() {
-        guard imageData == nil else { return }
-        
-        if let url = URL.init(string: imageUrl) {
-            imageData = try? Data(contentsOf: url)
-        }
-    }
 }

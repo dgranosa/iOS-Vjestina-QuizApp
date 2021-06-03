@@ -93,10 +93,10 @@ class LoginViewController: UIViewController {
         
         if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             loginButton.isEnabled = false
-            loginButton.backgroundColor = .init(white: 1, alpha: 0.3)
+            loginButton.backgroundColor = UIColor(white: 1, alpha: 0.3)
         } else {
             loginButton.isEnabled = true
-            loginButton.backgroundColor = .init(white: 1, alpha: 1)
+            loginButton.backgroundColor = UIColor(white: 1, alpha: 1)
         }
     }
 }

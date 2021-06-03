@@ -43,7 +43,7 @@ class SearchQuizViewController: UIViewController {
         searchButton.backgroundColor = .none
         searchButton.addTarget(self, action: #selector(self.fetchQuizzes), for: .touchUpInside)
         view.addSubview(searchButton)
-        searchButton.autoSetDimensions(to: .init(width: 60, height: 50))
+        searchButton.autoSetDimensions(to: CGSize(width: 60, height: 50))
         searchButton.autoPinEdge(toSuperviewMargin: .top, withInset: 10)
         searchButton.autoPinEdge(toSuperviewMargin: .trailing, withInset: 20)
         
@@ -65,7 +65,7 @@ class SearchQuizViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: .init(top: -1, left: 20, bottom: 0, right: 20), excludingEdge: .top)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: -1, left: 20, bottom: 0, right: 20), excludingEdge: .top)
         tableView.autoPinEdge(.top, to: .bottom, of: searchTextField)
     }
     
@@ -77,7 +77,7 @@ class SearchQuizViewController: UIViewController {
 
 extension SearchQuizViewController : UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        presenter.numberOfSections()
+        presenter.numberOfSections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
